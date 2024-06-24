@@ -179,6 +179,7 @@
             btn_file_output.TabIndex = 14;
             btn_file_output.Text = "Output";
             btn_file_output.UseVisualStyleBackColor = true;
+            btn_file_output.Click += btn_file_output_Click;
             // 
             // gui_main
             // 

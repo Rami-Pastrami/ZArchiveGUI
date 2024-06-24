@@ -4,19 +4,28 @@ namespace ZArchiveGUINET
 {
     public partial class gui_main : Form
     {
-        String path_wua = "";
-        String path_output = "";
-        String path_cache = "";
+        String pathWua = "";
+        String pathOutput = "";
+        String pathCache = "";
 
 
         public gui_main()
         {
             InitializeComponent();
-            path_cache = AppContext.BaseDirectory;
-            text_file_working.Text = path_cache;
+            update_paths("", "", AppContext.BaseDirectory);
         }
 
+        private void update_paths(String wuaPath, String outputPath, String cachePath)
+        {
+            pathWua = wuaPath;
+            pathOutput = outputPath;
+            pathCache = cachePath;
 
+            text_file_input.Text = wuaPath;
+            text_file_output.Text = outputPath;
+            text_file_working.Text = cachePath;
+
+        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -47,8 +56,7 @@ namespace ZArchiveGUINET
                 if (openFileDialog.ShowDialog() != DialogResult.OK) { return; }
                 if (openFileDialog.SafeFileNames.Length == 0) { return; }
 
-                path_wua = System.IO.Path.GetDirectoryName(openFileDialog.FileNames[0]);
-                text_file_input.Text = path_wua;
+                update_paths(System.IO.Path.GetDirectoryName(openFileDialog.FileNames[0]), pathOutput, pathCache);
 
                 String[] files = openFileDialog.SafeFileNames;
                 file_list.Items.Clear();
@@ -65,10 +73,34 @@ namespace ZArchiveGUINET
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        private void btn_file_output_Click(object sender, EventArgs e)
+        {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return; }
+
+                String selectedFolder = folderBrowserDialog.SelectedPath;
+                update_paths(pathWua, selectedFolder, pathCache);
+            }
+        }
+
+        /// <summary>
+        /// For setting cache / working folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_file_working_Click(object sender, EventArgs e)
         {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return; }
 
+                String selectedFolder = folderBrowserDialog.SelectedPath;
+                update_paths(pathWua, pathOutput, selectedFolder);
+            }
         }
+
+
     }
 
 }
