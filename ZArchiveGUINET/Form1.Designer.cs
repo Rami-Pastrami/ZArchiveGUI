@@ -89,8 +89,9 @@
             // 
             // lab_prog_cur
             // 
+            lab_prog_cur.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lab_prog_cur.AutoSize = true;
-            lab_prog_cur.Location = new Point(424, 294);
+            lab_prog_cur.Location = new Point(424, 309);
             lab_prog_cur.Name = "lab_prog_cur";
             lab_prog_cur.Size = new Size(116, 15);
             lab_prog_cur.TabIndex = 6;
@@ -100,7 +101,7 @@
             // lab_prog_total
             // 
             lab_prog_total.AutoSize = true;
-            lab_prog_total.Location = new Point(440, 309);
+            lab_prog_total.Location = new Point(443, 353);
             lab_prog_total.Name = "lab_prog_total";
             lab_prog_total.Size = new Size(80, 15);
             lab_prog_total.TabIndex = 7;

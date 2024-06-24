@@ -119,6 +119,14 @@ namespace ZArchiveGUINET
                 file_list.SetItemChecked(itemIndex, false);
             }
         }
+
+        // TODO
+        // check for exe existing
+        // chain exe usage
+        // gui cleanup
+
+
+
     }
 
 }
