@@ -27,16 +27,6 @@ namespace ZArchiveGUINET
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btn_file_list_all_Click(object sender, EventArgs e)
-        {
-
-        }
-
         /// <summary>
         /// For setting directory containing WUA files
         /// </summary>
@@ -55,8 +45,9 @@ namespace ZArchiveGUINET
 
                 if (openFileDialog.ShowDialog() != DialogResult.OK) { return; }
                 if (openFileDialog.SafeFileNames.Length == 0) { return; }
+                if (Path.GetDirectoryName(openFileDialog.FileNames[0]) is null) { return; }
 
-                update_paths(System.IO.Path.GetDirectoryName(openFileDialog.FileNames[0]), pathOutput, pathCache);
+                update_paths(Path.GetDirectoryName(openFileDialog.FileNames[0]), pathOutput, pathCache);
 
                 String[] files = openFileDialog.SafeFileNames;
                 file_list.Items.Clear();
@@ -100,7 +91,34 @@ namespace ZArchiveGUINET
             }
         }
 
+        /// <summary>
+        /// For selecting all items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_file_list_all_Click(object sender, EventArgs e)
+        {
+            if (file_list.Items.Count == 0) { return; }
 
+            for (int itemIndex = 0; itemIndex < file_list.Items.Count; itemIndex++)
+            {
+                file_list.SetItemChecked(itemIndex, true);
+            }
+        }
+
+        /// <summary>
+        /// For deslecting all items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_file_list_none_Click(object sender, EventArgs e)
+        {
+            if (file_list.Items.Count == 0) { return; }
+            for (int itemIndex = 0; itemIndex < file_list.Items.Count; itemIndex++)
+            {
+                file_list.SetItemChecked(itemIndex, false);
+            }
+        }
     }
 
 }

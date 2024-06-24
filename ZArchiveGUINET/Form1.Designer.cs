@@ -50,7 +50,6 @@
             file_list.FormattingEnabled = true;
             file_list.Location = new Point(12, 139);
             file_list.Name = "file_list";
-            file_list.SelectionMode = SelectionMode.None;
             file_list.Size = new Size(332, 292);
             file_list.TabIndex = 2;
             // 
@@ -146,6 +145,7 @@
             btn_file_list_none.TabIndex = 11;
             btn_file_list_none.Text = "Select None";
             btn_file_list_none.UseVisualStyleBackColor = true;
+            btn_file_list_none.Click += btn_file_list_none_Click;
             // 
             // text_file_input
             // 
@@ -205,7 +205,6 @@
             MaximizeBox = false;
             Name = "gui_main";
             Text = "WUA to WUP";
-            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
