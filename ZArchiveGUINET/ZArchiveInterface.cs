@@ -11,21 +11,12 @@ namespace ZArchiveGUINET
     /// </summary>
     public static class ZArchiveInterface
     {
-        public enum RESULT
-        {
-            OK,
-            EXE_NOT_FOUND,
-            WUP_NOT_FOUND,
-            OUTPUT_DIR_NOT_FOUND,
-            ZARCHIVE_FAILED,
-            SKIPPED,
-        }
 
-        public static async Task<RESULT> WUAToWUP(String ZArchiveEXEPath, String WUPPath, String OutputFolderPath)
+        public static async Task<BatchTaskHandler.RESULT> WUAToWUP(String ZArchiveEXEPath, String WUPPath, String OutputFolderPath)
         {
-            if (!Path.Exists(ZArchiveEXEPath)) { return RESULT.EXE_NOT_FOUND; }
-            if (!Path.Exists(WUPPath)) { return RESULT.WUP_NOT_FOUND; }
-            if (!Directory.Exists(OutputFolderPath)) { return RESULT.OUTPUT_DIR_NOT_FOUND; }
+            if (!Path.Exists(ZArchiveEXEPath)) { return BatchTaskHandler.RESULT.EXE_NOT_FOUND; }
+            if (!Path.Exists(WUPPath)) { return BatchTaskHandler.RESULT.WUP_NOT_FOUND; }
+            if (!Directory.Exists(OutputFolderPath)) { return BatchTaskHandler.RESULT.OUTPUT_DIR_NOT_FOUND; }
 
 
             using (Process proc = new() )
@@ -37,11 +28,11 @@ namespace ZArchiveGUINET
                     proc.StartInfo.Arguments = $"\"{WUPPath}\" \"{OutputFolderPath}\"";
                     proc.Start();
                     await proc.WaitForExitAsync();
-                    return RESULT.OK;
+                    return BatchTaskHandler.RESULT.OK;
                 }
                 catch
                 {
-                    return RESULT.ZARCHIVE_FAILED;
+                    return BatchTaskHandler.RESULT.ZARCHIVE_FAILED;
                 }
             }
 

@@ -6,8 +6,20 @@ using System.IO;
 
 namespace ZArchiveGUINET
 {
-    internal class BatchTaskHandler
+    public class BatchTaskHandler
     {
+        public enum RESULT
+        {
+            OK,
+            EXE_NOT_FOUND,
+            WUP_NOT_FOUND,
+            OUTPUT_DIR_NOT_FOUND,
+            ZARCHIVE_FAILED,
+            NUSPACKER_NOT_FOUND,
+            NUS_PACKER_FAILED,
+            SKIPPED,
+        }
+
         public event Action? StartedExtractWUA;
         public event Action? FinishedExtractWUA;
         public event Action? Cancled;
@@ -30,12 +42,12 @@ namespace ZArchiveGUINET
             forceStop = true;
         }
 
-        public async Task<ZArchiveInterface.RESULT[]> ProcessWUAsToWUPs(string[] WUAFilePaths)
+        public async Task<RESULT[]> ProcessWUAsToWUPs(string[] WUAFilePaths)
         {
             StartedExtractWUA?.Invoke();
             int numberWUAs = WUAFilePaths.Length;
-            ZArchiveInterface.RESULT[] results = new ZArchiveInterface.RESULT[numberWUAs];
-            Array.Fill<ZArchiveInterface.RESULT>(results, ZArchiveInterface.RESULT.SKIPPED);
+            RESULT[] results = new RESULT[numberWUAs];
+            Array.Fill<RESULT>(results, RESULT.SKIPPED);
             for (int i = 0; i < numberWUAs; i++)
             {
                 if (forceStop)

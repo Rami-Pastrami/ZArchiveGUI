@@ -42,22 +42,24 @@
             btn_file_output = new Button();
             ZArchivePathTextBox = new TextBox();
             ZArchivePathBtn = new Button();
+            NusPackerTextBox = new TextBox();
+            btn_nusPacker = new Button();
             SuspendLayout();
             // 
             // file_list
             // 
             file_list.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             file_list.FormattingEnabled = true;
-            file_list.Location = new Point(12, 132);
+            file_list.Location = new Point(12, 165);
             file_list.Name = "file_list";
-            file_list.Size = new Size(332, 292);
+            file_list.Size = new Size(372, 292);
             file_list.TabIndex = 2;
             // 
             // btn_start
             // 
             btn_start.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btn_start.Enabled = false;
-            btn_start.Location = new Point(484, 395);
+            btn_start.Location = new Point(558, 428);
             btn_start.Name = "btn_start";
             btn_start.Size = new Size(128, 32);
             btn_start.TabIndex = 0;
@@ -69,7 +71,7 @@
             // 
             btn_cancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btn_cancel.Enabled = false;
-            btn_cancel.Location = new Point(350, 395);
+            btn_cancel.Location = new Point(390, 428);
             btn_cancel.Name = "btn_cancel";
             btn_cancel.Size = new Size(128, 32);
             btn_cancel.TabIndex = 1;
@@ -80,19 +82,19 @@
             // progressBar1
             // 
             progressBar1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            progressBar1.Location = new Point(350, 367);
+            progressBar1.Location = new Point(390, 400);
             progressBar1.Name = "progressBar1";
-            progressBar1.Size = new Size(262, 23);
+            progressBar1.Size = new Size(296, 23);
             progressBar1.TabIndex = 3;
             // 
             // lab_prog_cur
             // 
             lab_prog_cur.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lab_prog_cur.AutoSize = true;
-            lab_prog_cur.Location = new Point(362, 233);
-            lab_prog_cur.MinimumSize = new Size(250, 0);
+            lab_prog_cur.Location = new Point(391, 266);
+            lab_prog_cur.MinimumSize = new Size(300, 0);
             lab_prog_cur.Name = "lab_prog_cur";
-            lab_prog_cur.Size = new Size(250, 15);
+            lab_prog_cur.Size = new Size(300, 15);
             lab_prog_cur.TabIndex = 6;
             lab_prog_cur.Text = "Current File: None";
             lab_prog_cur.TextAlign = ContentAlignment.MiddleCenter;
@@ -101,7 +103,7 @@
             // 
             lab_prog_total.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             lab_prog_total.AutoSize = true;
-            lab_prog_total.Location = new Point(443, 349);
+            lab_prog_total.Location = new Point(493, 382);
             lab_prog_total.Name = "lab_prog_total";
             lab_prog_total.Size = new Size(80, 15);
             lab_prog_total.TabIndex = 7;
@@ -110,7 +112,7 @@
             // 
             // btn_file_input
             // 
-            btn_file_input.Location = new Point(493, 12);
+            btn_file_input.Location = new Point(572, 12);
             btn_file_input.Name = "btn_file_input";
             btn_file_input.Size = new Size(119, 23);
             btn_file_input.TabIndex = 8;
@@ -121,7 +123,7 @@
             // btn_file_list_all
             // 
             btn_file_list_all.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btn_file_list_all.Location = new Point(244, 106);
+            btn_file_list_all.Location = new Point(284, 139);
             btn_file_list_all.Name = "btn_file_list_all";
             btn_file_list_all.Size = new Size(100, 23);
             btn_file_list_all.TabIndex = 10;
@@ -132,7 +134,7 @@
             // btn_file_list_none
             // 
             btn_file_list_none.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            btn_file_list_none.Location = new Point(12, 106);
+            btn_file_list_none.Location = new Point(12, 139);
             btn_file_list_none.Name = "btn_file_list_none";
             btn_file_list_none.Size = new Size(100, 23);
             btn_file_list_none.TabIndex = 11;
@@ -145,7 +147,7 @@
             text_file_input.Location = new Point(12, 13);
             text_file_input.Name = "text_file_input";
             text_file_input.ReadOnly = true;
-            text_file_input.Size = new Size(475, 23);
+            text_file_input.Size = new Size(554, 23);
             text_file_input.TabIndex = 12;
             // 
             // text_file_output
@@ -153,12 +155,12 @@
             text_file_output.Location = new Point(12, 40);
             text_file_output.Name = "text_file_output";
             text_file_output.ReadOnly = true;
-            text_file_output.Size = new Size(475, 23);
+            text_file_output.Size = new Size(554, 23);
             text_file_output.TabIndex = 15;
             // 
             // btn_file_output
             // 
-            btn_file_output.Location = new Point(493, 39);
+            btn_file_output.Location = new Point(572, 39);
             btn_file_output.Name = "btn_file_output";
             btn_file_output.Size = new Size(119, 23);
             btn_file_output.TabIndex = 14;
@@ -171,12 +173,12 @@
             ZArchivePathTextBox.Location = new Point(12, 69);
             ZArchivePathTextBox.Name = "ZArchivePathTextBox";
             ZArchivePathTextBox.ReadOnly = true;
-            ZArchivePathTextBox.Size = new Size(475, 23);
+            ZArchivePathTextBox.Size = new Size(554, 23);
             ZArchivePathTextBox.TabIndex = 17;
             // 
             // ZArchivePathBtn
             // 
-            ZArchivePathBtn.Location = new Point(493, 68);
+            ZArchivePathBtn.Location = new Point(572, 68);
             ZArchivePathBtn.Name = "ZArchivePathBtn";
             ZArchivePathBtn.Size = new Size(119, 23);
             ZArchivePathBtn.TabIndex = 16;
@@ -184,11 +186,30 @@
             ZArchivePathBtn.UseVisualStyleBackColor = true;
             ZArchivePathBtn.Click += ZArchivePathBtn_Click;
             // 
+            // NusPackerTextBox
+            // 
+            NusPackerTextBox.Location = new Point(12, 98);
+            NusPackerTextBox.Name = "NusPackerTextBox";
+            NusPackerTextBox.ReadOnly = true;
+            NusPackerTextBox.Size = new Size(554, 23);
+            NusPackerTextBox.TabIndex = 19;
+            // 
+            // btn_nusPacker
+            // 
+            btn_nusPacker.Location = new Point(572, 97);
+            btn_nusPacker.Name = "btn_nusPacker";
+            btn_nusPacker.Size = new Size(119, 23);
+            btn_nusPacker.TabIndex = 18;
+            btn_nusPacker.Text = "NusPacker Path";
+            btn_nusPacker.UseVisualStyleBackColor = true;
+            // 
             // gui_main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(624, 436);
+            ClientSize = new Size(698, 469);
+            Controls.Add(NusPackerTextBox);
+            Controls.Add(btn_nusPacker);
             Controls.Add(ZArchivePathTextBox);
             Controls.Add(ZArchivePathBtn);
             Controls.Add(text_file_output);
@@ -227,5 +248,7 @@
         private Button btn_file_output;
         private TextBox ZArchivePathTextBox;
         private Button ZArchivePathBtn;
+        private TextBox NusPackerTextBox;
+        private Button btn_nusPacker;
     }
 }

@@ -248,7 +248,7 @@ namespace ZArchiveGUINET
             string[] WUAsToExtract = GetSelectedFilePaths();
             processor = new BatchTaskHandler(ZArchivePathTextBox.Text, text_file_output.Text);
             processor.UpdatedWuaExtractProgress += UpdateProgress;
-            ZArchiveInterface.RESULT[] results = await processor.ProcessWUAsToWUPs(WUAsToExtract);
+            BatchTaskHandler.RESULT[] results = await processor.ProcessWUAsToWUPs(WUAsToExtract);
             ResetRunUISection();
             EnableStartButtonIfReady();
             processor = null;
