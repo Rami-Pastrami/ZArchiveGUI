@@ -10,6 +10,7 @@ namespace ZArchiveGUINET
     {
         public event Action? StartedExtractWUA;
         public event Action? FinishedExtractWUA;
+        public event Action? Cancled;
         public event UpdatedWUAExtractProgress? UpdatedWuaExtractProgress;
 
         public delegate void UpdatedWUAExtractProgress(string currentWUAFile, float completedPercentage);

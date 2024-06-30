@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -6,17 +7,18 @@ namespace ZArchiveGUINET
 {
     public partial class gui_main : Form
     {
-
+        bool isJavaInstalled = false;
         string[] selectedWUAFiles = new string[0];
+        BatchTaskHandler? processor = null;
 
         public gui_main()
         {
             InitializeComponent();
-            ZArchivePathTextBox.Text = AttemptyLoadZArchivePath();
-
+            ZArchivePathTextBox.Text = AttemptLoadZArchivePath();
+            isJavaInstalled = IsJavaInstalled();
         }
 
-        string AttemptyLoadZArchivePath()
+        string AttemptLoadZArchivePath()
         {
             string currentFolder = "";
             currentFolder = Path.GetDirectoryName(Application.ExecutablePath);
@@ -77,6 +79,7 @@ namespace ZArchiveGUINET
             {
                 //Verify
                 if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return; }
+                if (!Directory.Exists(folderBrowserDialog.SelectedPath)) {  return; }
 
                 // Set folder path
                 text_file_output.Text = folderBrowserDialog.SelectedPath;
@@ -145,9 +148,11 @@ namespace ZArchiveGUINET
 
         private void btn_cancel_Click(object sender, EventArgs e)
         {
-            //TODO
-            ResetRunUISection();
-            EnableStartButtonIfReady();
+            if(processor == null) {  return; }
+
+            processor.ForceStop();
+            btn_cancel.Text = "Canceling...";
+
         }
 
         #endregion
@@ -168,6 +173,7 @@ namespace ZArchiveGUINET
         {
             btn_start.Enabled = false;
             btn_cancel.Enabled = false;
+            btn_cancel.Text = "Cancel";
             lab_prog_cur.Text = "Current File: None";
             progressBar1.Value = 0;
         }
@@ -188,6 +194,51 @@ namespace ZArchiveGUINET
 
         }
 
+        private bool IsJavaInstalled()
+        {
+            try
+            {
+                // Totally not taken from https://stackoverflow.com/questions/1855937/how-to-detect-whether-java-runtime-is-installed-or-not
+                using (Process javaTester = new Process())
+                {
+                    List<String> output = new List<string>();
+                    javaTester.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    javaTester.StartInfo.CreateNoWindow = true;
+                    javaTester.StartInfo.FileName = "cmd.exe";
+                    javaTester.StartInfo.UseShellExecute = false;
+                    javaTester.StartInfo.RedirectStandardOutput = true;
+                    javaTester.StartInfo.RedirectStandardError = true;
+                    javaTester.StartInfo.Arguments = "/c \"" + "java -version " + "\"";
+
+                    javaTester.OutputDataReceived += new DataReceivedEventHandler((s, e) =>
+                    {
+                        if (e.Data != null)
+                        {
+                            output.Add((string)e.Data);
+                        }
+                    });
+                    javaTester.ErrorDataReceived += new DataReceivedEventHandler((s, e) =>
+                    {
+                        if (e.Data != null)
+                        {
+                            output.Add((String)e.Data);
+                        }
+                    });
+
+                    javaTester.Start();
+                    javaTester.BeginOutputReadLine();
+                    javaTester.BeginErrorReadLine();
+
+                    return javaTester.ExitCode == 0;
+                }
+            }
+            catch 
+            {
+                return false;
+            }
+
+        }
+
         #endregion
 
         private async void RunWUAExtractionOnSelected()
@@ -195,11 +246,12 @@ namespace ZArchiveGUINET
             btn_start.Enabled = false;
             btn_cancel.Enabled = true;
             string[] WUAsToExtract = GetSelectedFilePaths();
-            BatchTaskHandler processor = new BatchTaskHandler(ZArchivePathTextBox.Text, text_file_output.Text);
+            processor = new BatchTaskHandler(ZArchivePathTextBox.Text, text_file_output.Text);
             processor.UpdatedWuaExtractProgress += UpdateProgress;
             ZArchiveInterface.RESULT[] results = await processor.ProcessWUAsToWUPs(WUAsToExtract);
             ResetRunUISection();
             EnableStartButtonIfReady();
+            processor = null;
         }
 
         private void UpdateProgress(string currentFileName, float percentageComplete)
