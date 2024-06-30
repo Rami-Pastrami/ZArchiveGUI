@@ -23,8 +23,8 @@ namespace ZArchiveGUINET
 
         public static async Task<RESULT> WUAToWUP(String ZArchiveEXEPath, String WUPPath, String OutputFolderPath)
         {
-            if (!Directory.Exists(ZArchiveEXEPath)) { return RESULT.EXE_NOT_FOUND; }
-            if (!Directory.Exists(WUPPath)) { return RESULT.WUP_NOT_FOUND; }
+            if (!Path.Exists(ZArchiveEXEPath)) { return RESULT.EXE_NOT_FOUND; }
+            if (!Path.Exists(WUPPath)) { return RESULT.WUP_NOT_FOUND; }
             if (!Directory.Exists(OutputFolderPath)) { return RESULT.OUTPUT_DIR_NOT_FOUND; }
 
 
