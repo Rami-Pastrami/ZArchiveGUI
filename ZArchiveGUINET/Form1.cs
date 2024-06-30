@@ -62,6 +62,7 @@ namespace ZArchiveGUINET
                 {
                     file_list.Items.Add(file);
                 }
+                EnableStartButtonIfReady();
             }
         }
 
@@ -79,6 +80,7 @@ namespace ZArchiveGUINET
 
                 // Set folder path
                 text_file_output.Text = folderBrowserDialog.SelectedPath;
+                EnableStartButtonIfReady();
             }
         }
 
@@ -102,6 +104,7 @@ namespace ZArchiveGUINET
 
                 // Set exe path
                 ZArchivePathTextBox.Text = openFileDialog.FileName;
+                EnableStartButtonIfReady();
             }
         }
 
@@ -135,19 +138,76 @@ namespace ZArchiveGUINET
         }
 
 
+        private void btn_start_Click(object sender, EventArgs e)
+        {
+            RunWUAExtractionOnSelected();
+        }
+
+        private void btn_cancel_Click(object sender, EventArgs e)
+        {
+            //TODO
+            ResetRunUISection();
+            EnableStartButtonIfReady();
+        }
+
         #endregion
 
+        #region UI Logic
+        /// <summary>
+        /// Checks state of program, will enable start button if prequesites are met
+        /// </summary>
+        private void EnableStartButtonIfReady()
+        {
+            bool isReady = selectedWUAFiles.Length > 0;
+            isReady = isReady && Directory.Exists(text_file_output.Text);
+            isReady = isReady && Path.Exists(ZArchivePathTextBox.Text);
+            btn_start.Enabled = isReady;
+        }
 
+        private void ResetRunUISection()
+        {
+            btn_start.Enabled = false;
+            btn_cancel.Enabled = false;
+            lab_prog_cur.Text = "Current File: None";
+            progressBar1.Value = 0;
+        }
 
+        #endregion
 
+        #region Queries
 
+        private string[] GetSelectedFilePaths()
+        {
+            string[] file_names = file_list.CheckedItems.Cast<string>().ToArray();
+            string[] paths = new string[file_names.Length];
+            for (int i = 0; i < file_names.Length; i++)
+            {
+                paths[i] = text_file_input.Text + "\\" +  file_names[i];
+            }
+            return paths;
 
+        }
 
+        #endregion
+
+        private async void RunWUAExtractionOnSelected()
+        {
+            string[] WUAsToExtract = GetSelectedFilePaths();
+            BatchTaskHandler processor = new BatchTaskHandler(ZArchivePathTextBox.Text, text_file_output.Text);
+            processor.UpdatedWuaExtractProgress += UpdateProgress;
+            await processor.ProcessWUAsToWUPs(WUAsToExtract);
+            ResetRunUISection();
+            EnableStartButtonIfReady();
+        }
+
+        private void UpdateProgress(string currentFileName, float percentageComplete)
+        {
+            lab_prog_cur.Text = "Current File: " + currentFileName;
+            progressBar1.Value = (int)(percentageComplete * 100f);
+        }
 
 
         // TODO
-        // check for exe existing
-        // chain exe usage
         // gui cleanup
 
 

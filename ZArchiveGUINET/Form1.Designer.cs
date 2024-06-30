@@ -63,16 +63,19 @@
             btn_start.TabIndex = 0;
             btn_start.Text = "Start";
             btn_start.UseVisualStyleBackColor = true;
+            btn_start.Click += btn_start_Click;
             // 
             // btn_cancel
             // 
             btn_cancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btn_cancel.Enabled = false;
             btn_cancel.Location = new Point(350, 395);
             btn_cancel.Name = "btn_cancel";
             btn_cancel.Size = new Size(128, 32);
             btn_cancel.TabIndex = 1;
             btn_cancel.Text = "Cancel";
             btn_cancel.UseVisualStyleBackColor = true;
+            btn_cancel.Click += btn_cancel_Click;
             // 
             // progressBar1
             // 
