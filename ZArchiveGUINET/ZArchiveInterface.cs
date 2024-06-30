@@ -18,6 +18,7 @@ namespace ZArchiveGUINET
             WUP_NOT_FOUND,
             OUTPUT_DIR_NOT_FOUND,
             ZARCHIVE_FAILED,
+            SKIPPED,
         }
 
         public static async Task<RESULT> WUAToWUP(String ZArchiveEXEPath, String WUPPath, String OutputFolderPath)

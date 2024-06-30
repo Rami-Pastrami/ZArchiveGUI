@@ -1,31 +1,35 @@
+using System.Diagnostics;
 using System.IO;
+using System.Windows.Forms;
 
 namespace ZArchiveGUINET
 {
     public partial class gui_main : Form
     {
-        String pathWua = "";
-        String pathOutput = "";
-        String pathCache = "";
 
+        string[] selectedWUAFiles = new string[0];
 
         public gui_main()
         {
             InitializeComponent();
-            update_paths("", "", AppContext.BaseDirectory);
+            ZArchivePathTextBox.Text = AttemptyLoadZArchivePath();
+
         }
 
-        private void update_paths(String wuaPath, String outputPath, String cachePath)
+        string AttemptyLoadZArchivePath()
         {
-            pathWua = wuaPath;
-            pathOutput = outputPath;
-            pathCache = cachePath;
-
-            text_file_input.Text = wuaPath;
-            text_file_output.Text = outputPath;
-            text_file_working.Text = cachePath;
-
+            string currentFolder = "";
+            currentFolder = Path.GetDirectoryName(Application.ExecutablePath);
+            string possiblePath = currentFolder + "zarchive.exe";
+            if (File.Exists(possiblePath))
+            {
+                return possiblePath;
+            }
+            return "";
         }
+
+
+        #region Button Events
 
         /// <summary>
         /// For setting directory containing WUA files
@@ -37,25 +41,27 @@ namespace ZArchiveGUINET
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Title = "Select all WUAs you would like to dump as WUP files";
-                openFileDialog.InitialDirectory = "c:\\";
                 openFileDialog.Multiselect = true;
                 openFileDialog.Filter = "wua files (*.wua)|*.wua";
                 openFileDialog.FilterIndex = 0;
                 openFileDialog.RestoreDirectory = true;
 
+                // Verify
                 if (openFileDialog.ShowDialog() != DialogResult.OK) { return; }
                 if (openFileDialog.SafeFileNames.Length == 0) { return; }
                 if (Path.GetDirectoryName(openFileDialog.FileNames[0]) is null) { return; }
 
-                update_paths(Path.GetDirectoryName(openFileDialog.FileNames[0]), pathOutput, pathCache);
+                // Set folder path
+                text_file_input.Text = Path.GetDirectoryName(openFileDialog.FileNames[0]);
+                selectedWUAFiles = openFileDialog.FileNames; // save full paths
 
+                // Set selectable items
                 String[] files = openFileDialog.SafeFileNames;
                 file_list.Items.Clear();
                 foreach (String file in files)
                 {
                     file_list.Items.Add(file);
                 }
-
             }
         }
 
@@ -68,28 +74,37 @@ namespace ZArchiveGUINET
         {
             using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
             {
+                //Verify
                 if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return; }
 
-                String selectedFolder = folderBrowserDialog.SelectedPath;
-                update_paths(pathWua, selectedFolder, pathCache);
+                // Set folder path
+                text_file_output.Text = folderBrowserDialog.SelectedPath;
             }
         }
 
         /// <summary>
-        /// For setting cache / working folder
+        /// For setting ZArchive EXE path
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btn_file_working_Click(object sender, EventArgs e)
+        private void ZArchivePathBtn_Click(object sender, EventArgs e)
         {
-            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                if (folderBrowserDialog.ShowDialog() != DialogResult.OK) { return; }
+                openFileDialog.Title = "Select the ZArchive exe";
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "exe files (*.exe)|*.exe";
+                openFileDialog.FilterIndex = 0;
+                openFileDialog.RestoreDirectory = true;
 
-                String selectedFolder = folderBrowserDialog.SelectedPath;
-                update_paths(pathWua, pathOutput, selectedFolder);
+                // Verify
+                if (openFileDialog.ShowDialog() != DialogResult.OK) { return; }
+
+                // Set exe path
+                ZArchivePathTextBox.Text = openFileDialog.FileName;
             }
         }
+
 
         /// <summary>
         /// For selecting all items
@@ -99,7 +114,6 @@ namespace ZArchiveGUINET
         private void btn_file_list_all_Click(object sender, EventArgs e)
         {
             if (file_list.Items.Count == 0) { return; }
-
             for (int itemIndex = 0; itemIndex < file_list.Items.Count; itemIndex++)
             {
                 file_list.SetItemChecked(itemIndex, true);
@@ -119,6 +133,17 @@ namespace ZArchiveGUINET
                 file_list.SetItemChecked(itemIndex, false);
             }
         }
+
+
+        #endregion
+
+
+
+
+
+
+
+
 
         // TODO
         // check for exe existing

@@ -16,6 +16,7 @@ namespace ZArchiveGUINET
         
         string ZArchivePath;
         string outputFolderPath;
+        bool forceStop = false;
 
         public BatchTaskHandler(string zArchivePath, string outputFolderPath)
         {
@@ -23,13 +24,24 @@ namespace ZArchiveGUINET
             this.outputFolderPath = outputFolderPath;
         }
 
+        public void ForceStop()
+        {
+            forceStop = true;
+        }
+
         public async Task<ZArchiveInterface.RESULT[]> ProcessWUAsToWUPs(string[] WUAFilePaths)
         {
             StartedExtractWUA?.Invoke();
             int numberWUAs = WUAFilePaths.Length;
             ZArchiveInterface.RESULT[] results = new ZArchiveInterface.RESULT[numberWUAs];
+            Array.Fill<ZArchiveInterface.RESULT>(results, ZArchiveInterface.RESULT.SKIPPED);
             for (int i = 0; i < numberWUAs; i++)
             {
+                if (forceStop)
+                {
+                    forceStop = false;
+                    break;
+                }
                 string fileName = Path.GetFileName(WUAFilePaths[i]);
                 UpdatedWuaExtractProgress?.Invoke(fileName, (float)i / (float)numberWUAs);
                 results[i] = await ZArchiveInterface.WUAToWUP(ZArchivePath, WUAFilePaths[i], outputFolderPath);
