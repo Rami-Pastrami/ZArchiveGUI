@@ -1,5 +1,4 @@
 # ZArchive GUI
-# ZArchive GUI
 A GUI for the [ZArchive](https://github.com/Exzap/ZArchive) tool so that you can do batch operations easily!
 
 ![image](https://github.com/Rami-Pastrami/ZArchiveGUI/assets/25966197/a0514317-7d76-45ef-8c1e-a4eae5e412a0)
