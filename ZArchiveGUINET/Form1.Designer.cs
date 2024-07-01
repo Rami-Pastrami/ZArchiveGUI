@@ -206,7 +206,7 @@
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "gui_main";
-            Text = "WUA to WUP";
+            Text = "WUA Dumper";
             ResumeLayout(false);
             PerformLayout();
         }
