@@ -42,7 +42,7 @@ namespace ZArchiveGUINET
             forceStop = true;
         }
 
-        public async Task<RESULT[]> ProcessWUAsToWUPs(string[] WUAFilePaths)
+        public async Task<RESULT[]> ProcessWUAs(string[] WUAFilePaths)
         {
             StartedExtractWUA?.Invoke();
             int numberWUAs = WUAFilePaths.Length;

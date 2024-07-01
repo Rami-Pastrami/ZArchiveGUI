@@ -42,8 +42,6 @@
             btn_file_output = new Button();
             ZArchivePathTextBox = new TextBox();
             ZArchivePathBtn = new Button();
-            NusPackerTextBox = new TextBox();
-            btn_nusPacker = new Button();
             SuspendLayout();
             // 
             // file_list
@@ -186,30 +184,11 @@
             ZArchivePathBtn.UseVisualStyleBackColor = true;
             ZArchivePathBtn.Click += ZArchivePathBtn_Click;
             // 
-            // NusPackerTextBox
-            // 
-            NusPackerTextBox.Location = new Point(12, 98);
-            NusPackerTextBox.Name = "NusPackerTextBox";
-            NusPackerTextBox.ReadOnly = true;
-            NusPackerTextBox.Size = new Size(554, 23);
-            NusPackerTextBox.TabIndex = 19;
-            // 
-            // btn_nusPacker
-            // 
-            btn_nusPacker.Location = new Point(572, 97);
-            btn_nusPacker.Name = "btn_nusPacker";
-            btn_nusPacker.Size = new Size(119, 23);
-            btn_nusPacker.TabIndex = 18;
-            btn_nusPacker.Text = "NusPacker Path";
-            btn_nusPacker.UseVisualStyleBackColor = true;
-            // 
             // gui_main
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(698, 469);
-            Controls.Add(NusPackerTextBox);
-            Controls.Add(btn_nusPacker);
             Controls.Add(ZArchivePathTextBox);
             Controls.Add(ZArchivePathBtn);
             Controls.Add(text_file_output);
@@ -248,7 +227,5 @@
         private Button btn_file_output;
         private TextBox ZArchivePathTextBox;
         private Button ZArchivePathBtn;
-        private TextBox NusPackerTextBox;
-        private Button btn_nusPacker;
     }
 }
