@@ -7,7 +7,7 @@ A GUI for the [ZArchive](https://github.com/Exzap/ZArchive) tool so that you can
 Allows converting of WUA files for the Wii U into decrypted game dumps
 
 ## Instructions
-- Ensure you have the [.NET Runtime 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) installed
+- Ensure you have the [.NET Desktop Runtime 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) installed
 - Download the EXE from the releases
 - Download the [ZArchive latest release exe](https://github.com/Exzap/ZArchive/releases) and put it in the same folder
 - Launch the program
